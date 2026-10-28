@@ -1,0 +1,127 @@
+{
+  "selectedTerrain": "core:sand",
+  "slots": [
+    {
+      "selectedHero": "cultivation:demonMaster",
+      "commander": "cultivation:demonSoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:demonDisciple",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:demonElder",
+          "amount": 4
+        },
+        {
+          "type": "cultivation:demonGoldGuard",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:demonGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:demonMortal",
+          "amount": 4
+        },
+        {
+          "type": "cultivation:demonSpiritBeast",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:demonSwordGuard",
+          "amount": 5
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [
+        {
+          "skill": "cultivation:demonBloodArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:evilWindArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:bloodDrainArt",
+          "masteryLevel": "expert"
+        }
+      ],
+      "mana": 150,
+      "spellBook": true,
+      "spells": [
+        "cultivation:bloodPuppet"
+      ],
+      "artifacts": {},
+      "warMachines": false
+    },
+    {
+      "selectedHero": "cultivation:talismanMaster",
+      "commander": "cultivation:talismanSoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:talismanDisciple",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:talismanElder",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanGoldGuard",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:talismanGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanMortal",
+          "amount": 7
+        },
+        {
+          "type": "cultivation:talismanSpiritBeast",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanSwordGuard",
+          "amount": 2
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [
+        {
+          "skill": "cultivation:talismanSoldierArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:thunderTalismanArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:purifyTalismanArt",
+          "masteryLevel": "expert"
+        }
+      ],
+      "mana": 150,
+      "spellBook": true,
+      "spells": [
+        "cultivation:talismanFormation"
+      ],
+      "artifacts": {},
+      "warMachines": false
+    }
+  ]
+}

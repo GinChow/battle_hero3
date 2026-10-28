@@ -1,0 +1,45 @@
+{
+  "selectedTerrain": "core:dirt",
+  "slots": [
+    {
+      "selectedHero": "core:orrin",
+      "selectedArmy": [
+        {
+          "type": "core:pikeman",
+          "amount": 20
+        },
+        {
+          "type": "core:archer",
+          "amount": 10
+        }
+      ],
+      "primSkillLevel": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "spellBook": false
+    },
+    {
+      "selectedHero": "core:valeska",
+      "selectedArmy": [
+        {
+          "type": "core:pikeman",
+          "amount": 20
+        },
+        {
+          "type": "core:archer",
+          "amount": 10
+        }
+      ],
+      "primSkillLevel": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "spellBook": false
+    }
+  ]
+}

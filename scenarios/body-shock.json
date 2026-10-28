@@ -1,0 +1,57 @@
+{
+  "selectedTerrain": "core:sand",
+  "slots": [
+    {
+      "selectedHero": "cultivation:bodyMaster",
+      "commander": "cultivation:bodyCore",
+      "mana": 60,
+      "selectedArmy": [
+        {
+          "type": "cultivation:goldGuard",
+          "amount": 100
+        },
+        {
+          "type": "cultivation:guardian",
+          "amount": 100
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        2,
+        7
+      ],
+      "spellBook": true,
+      "spells": [],
+      "secSkillLevel": [
+        {
+          "skill": "cultivation:earthShakingArt",
+          "masteryLevel": "expert"
+        }
+      ]
+    },
+    {
+      "selectedHero": "cultivation:swordMaster",
+      "commander": "cultivation:swordCore",
+      "mana": 0,
+      "selectedArmy": [
+        {
+          "type": "cultivation:swordGoldGuard",
+          "amount": 100
+        },
+        {
+          "type": "cultivation:swordGuardian",
+          "amount": 100
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        2,
+        7
+      ],
+      "spellBook": false,
+      "spells": []
+    }
+  ]
+}

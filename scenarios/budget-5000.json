@@ -1,0 +1,86 @@
+{
+  "selectedTerrain": "core:sand",
+  "slots": [
+    {
+      "selectedHero": "cultivation:swordMaster",
+      "commander": "cultivation:swordCore",
+      "selectedArmy": [
+        {
+          "type": "cultivation:swordDisciple",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:swordElder",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:swordGoldGuard",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:swordGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:swordMortal",
+          "amount": 5
+        },
+        {
+          "type": "cultivation:swordSwordGuard",
+          "amount": 4
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "secSkillLevel": [],
+      "mana": 20,
+      "spellBook": true,
+      "spells": [
+        "core:magicArrow"
+      ],
+      "artifacts": {},
+      "warMachines": false
+    },
+    {
+      "selectedHero": "cultivation:bodyMaster",
+      "commander": "cultivation:bodyCore",
+      "selectedArmy": [
+        {
+          "type": "cultivation:elder",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:goldGuard",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:mortal",
+          "amount": 5
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "secSkillLevel": [],
+      "mana": 20,
+      "spellBook": true,
+      "spells": [
+        "core:magicArrow"
+      ],
+      "artifacts": {},
+      "warMachines": false
+    }
+  ],
+  "point_buy": {
+    "budget": 5000,
+    "seed": 1,
+    "prices_sha256": "c79e0988dbf30b2b2885f6d19c1afb5b61d1669e87959bad129012d2b0b51557"
+  }
+}

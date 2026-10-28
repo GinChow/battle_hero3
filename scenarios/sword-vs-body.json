@@ -1,0 +1,125 @@
+{
+  "selectedTerrain": "core:sand",
+  "slots": [
+    {
+      "selectedHero": "cultivation:swordMaster",
+      "commander": "cultivation:swordSoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:swordDisciple",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:swordElder",
+          "amount": 4
+        },
+        {
+          "type": "cultivation:swordGoldGuard",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:swordGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:swordMortal",
+          "amount": 4
+        },
+        {
+          "type": "cultivation:swordSpiritBeast",
+          "amount": 1
+        },
+        {
+          "type": "cultivation:swordSwordGuard",
+          "amount": 5
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [
+        {
+          "skill": "cultivation:swordEscapeArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:swordCloneArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:swordIntentArt",
+          "masteryLevel": "expert"
+        }
+      ],
+      "mana": 150,
+      "spellBook": true,
+      "spells": [
+        "cultivation:swordStorm"
+      ],
+      "artifacts": {},
+      "warMachines": false
+    },
+    {
+      "selectedHero": "cultivation:bodyMaster",
+      "commander": "cultivation:bodySoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:disciple",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:elder",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:goldGuard",
+          "amount": 2
+        },
+        {
+          "type": "cultivation:guardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:mortal",
+          "amount": 7
+        },
+        {
+          "type": "cultivation:spiritBeast",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:swordGuard",
+          "amount": 2
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [
+        {
+          "skill": "cultivation:earthShakingArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:guardArt",
+          "masteryLevel": "expert"
+        },
+        {
+          "skill": "cultivation:diamondArt",
+          "masteryLevel": "expert"
+        }
+      ],
+      "mana": 150,
+      "spellBook": true,
+      "spells": [],
+      "artifacts": {},
+      "warMachines": false
+    }
+  ]
+}

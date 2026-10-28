@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "primary_point": 100,
+  "mana_point": 5,
+  "spellbook": 100,
+  "spells": {
+    "core:magicArrow": 100,
+    "core:haste": 150,
+    "core:resurrection": 600,
+    "cultivation:swordStorm": 500,
+    "cultivation:groundShock": 0,
+    "cultivation:swordEscape": 0,
+    "cultivation:swordClone": 0,
+    "cultivation:demonBlood": 0,
+    "cultivation:evilWind": 0,
+    "cultivation:bloodPuppet": 500,
+    "cultivation:summonTalisman": 0,
+    "cultivation:thunderTalisman": 0,
+    "cultivation:purifyTalisman": 0,
+    "cultivation:talismanFormation": 500
+  },
+  "skills": {
+    "core:offence": [
+      200,
+      450,
+      750
+    ],
+    "core:armorer": [
+      200,
+      450,
+      750
+    ],
+    "core:wisdom": [
+      100,
+      200,
+      300
+    ],
+    "cultivation:earthShakingArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:diamondArt": [
+      300,
+      600,
+      900
+    ],
+    "cultivation:guardArt": [
+      200,
+      400,
+      650
+    ],
+    "cultivation:swordEscapeArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:swordCloneArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:swordIntentArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:demonBloodArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:evilWindArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:bloodDrainArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:talismanSoldierArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:thunderTalismanArt": [
+      250,
+      500,
+      800
+    ],
+    "cultivation:purifyTalismanArt": [
+      250,
+      500,
+      800
+    ]
+  },
+  "skill_requirements": {
+    "cultivation:diamondArt": {
+      "bodyPrefix": "cultivation:body",
+      "minimumRealm": 4
+    },
+    "cultivation:guardArt": {
+      "bodyPrefix": "cultivation:body",
+      "minimumRealm": 1
+    },
+    "cultivation:swordEscapeArt": {
+      "bodyPrefix": "cultivation:sword",
+      "minimumRealm": 1
+    },
+    "cultivation:swordCloneArt": {
+      "bodyPrefix": "cultivation:sword",
+      "minimumRealm": 1
+    },
+    "cultivation:swordIntentArt": {
+      "bodyPrefix": "cultivation:sword",
+      "minimumRealm": 1
+    },
+    "cultivation:demonBloodArt": {
+      "bodyPrefix": "cultivation:demon",
+      "minimumRealm": 1
+    },
+    "cultivation:evilWindArt": {
+      "bodyPrefix": "cultivation:demon",
+      "minimumRealm": 1
+    },
+    "cultivation:bloodDrainArt": {
+      "bodyPrefix": "cultivation:demon",
+      "minimumRealm": 1
+    },
+    "cultivation:talismanSoldierArt": {
+      "bodyPrefix": "cultivation:talisman",
+      "minimumRealm": 1
+    },
+    "cultivation:thunderTalismanArt": {
+      "bodyPrefix": "cultivation:talisman",
+      "minimumRealm": 1
+    },
+    "cultivation:purifyTalismanArt": {
+      "bodyPrefix": "cultivation:talisman",
+      "minimumRealm": 1
+    }
+  },
+  "artifacts": {
+    "core:centaurAxe": {
+      "points": 400,
+      "position": 3
+    }
+  },
+  "rosters": {
+    "body": [
+      "cultivation:mortal",
+      "cultivation:disciple",
+      "cultivation:guardian",
+      "cultivation:swordGuard",
+      "cultivation:goldGuard",
+      "cultivation:spiritBeast",
+      "cultivation:elder"
+    ],
+    "sword": [
+      "cultivation:swordMortal",
+      "cultivation:swordDisciple",
+      "cultivation:swordGuardian",
+      "cultivation:swordSwordGuard",
+      "cultivation:swordGoldGuard",
+      "cultivation:swordSpiritBeast",
+      "cultivation:swordElder"
+    ],
+    "demon": [
+      "cultivation:demonMortal",
+      "cultivation:demonDisciple",
+      "cultivation:demonGuardian",
+      "cultivation:demonSwordGuard",
+      "cultivation:demonGoldGuard",
+      "cultivation:demonSpiritBeast",
+      "cultivation:demonElder"
+    ],
+    "talisman": [
+      "cultivation:talismanMortal",
+      "cultivation:talismanDisciple",
+      "cultivation:talismanGuardian",
+      "cultivation:talismanSwordGuard",
+      "cultivation:talismanGoldGuard",
+      "cultivation:talismanSpiritBeast",
+      "cultivation:talismanElder"
+    ]
+  }
+}
