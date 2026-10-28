@@ -1,0 +1,4 @@
+[submodule "engine"]
+	path = engine
+	url = /Users/jin/Projects/vcmi
+	branch = battle-hero3/engine
