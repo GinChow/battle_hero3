@@ -4,3 +4,4 @@ __pycache__/
 /results*.jsonl
 .codex/
 results/
+.DS_Store

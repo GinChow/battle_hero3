@@ -1,0 +1,89 @@
+{
+  "selectedTerrain": "core:sand",
+  "slots": [
+    {
+      "selectedHero": "cultivation:swordMaster",
+      "commander": "cultivation:swordSoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:swordSwordGuard",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:guardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:demonGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanGoldGuard",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:swordDisciple",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:goldGuard",
+          "amount": 3
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [],
+      "mana": 0,
+      "spellBook": true,
+      "spells": [],
+      "artifacts": {},
+      "warMachines": false
+    },
+    {
+      "selectedHero": "cultivation:bodyMaster",
+      "commander": "cultivation:bodySoul",
+      "selectedArmy": [
+        {
+          "type": "cultivation:swordSwordGuard",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:guardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:demonGuardian",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanGoldGuard",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:demonElder",
+          "amount": 3
+        },
+        {
+          "type": "cultivation:talismanElder",
+          "amount": 3
+        }
+      ],
+      "primSkillLevel": [
+        0,
+        0,
+        3,
+        15
+      ],
+      "secSkillLevel": [],
+      "mana": 0,
+      "spellBook": true,
+      "spells": [],
+      "artifacts": {},
+      "warMachines": false
+    }
+  ]
+}
