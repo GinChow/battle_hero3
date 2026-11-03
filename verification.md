@@ -1,5 +1,19 @@
 # 验证记录
 
+## 2026-11-03 · Codex · 按钮文字上移
+
+九个文字按钮统一上移4逻辑像素，沿用18号至尊和古宋正文；复用原生labelGroup，避免按钮状态切换重置文字位置。11项资源测试及多密度边界检查通过。保留用户当前对局，下次重新打开战斗加载新配置，无需编译。
+
+## 2026-11-03 · Codex · 原字体与按钮字号确认
+
+按用户要求恢复至尊书法体、古宋体；按钮字号由13改为18（约增加38%）。保留Retina、高清角色以及此前调整的正文尺寸与名牌空间。11项皮肤资源测试通过，九个中文按钮在1×/2×/3×下的文字边界检查通过。重新启动原生预览加载配置；本次无需编译。
+
+## 2026-11-03 · Codex · 画面清晰度修复
+
+12套角色的1,483张在用动作帧已从原Spine重新渲染为3×，补齐2×、头像和预生成图层。小字改用文泉驿微米黑并增大，人数框和名牌空间相应调整。macOS桌面SDL2分支补上HiDPI标志，同时窗口尺寸持久化改用窗口坐标，输入法矩形使用SDL原生逻辑坐标换算。实测输出由1728×1052提升至3456×2104，日志实际读取3×素材；最终原生截图 `.codex/hd-retina-final.png`。
+
+客户端编译通过；49项Python/资源/原生模拟进程测试全部通过。当前游戏窗口已重新启动。CUA自动输入因应用状态变化被拒绝，本轮未完成鼠标移动/施法端到端操作验证。原始背景仍约1500像素，未宣称恢复其不存在的细节；新增2×/3×人物资源约287MiB。详见 `.codex/review-hd-2026-11-03.md`。
+
 ## 2026-10-27 · Codex · 图形手动战斗
 
 `python3 simulate.py --play --scenario scenarios/body-shock.json` 已实际弹出原生战斗窗口，双方为手动热座。中文与头像显示正常，场景灵力60/0保持不变；D防御和C打开震地法术书通过。相关原生142项、Python32项通过；扩大原生测试1069/1082通过，13项失败，详情在 `.codex/review-gui.md`。CUA鼠标事件坐标固定，鼠标施法尚未完成端到端验证；部分原版障碍图存在青色透明底。美术仍复用原版，完整GOALS未全部完成。
@@ -204,3 +218,139 @@ OK
 ## 2026-11-02 · Codex：移除战斗开场音效
 
 删除 BattleInterface 开场音效播放与完成回调，直接解锁战斗并播放原有背景音乐。CMake vcmiclient 构建通过，38 项既有 Python 测试通过，engine git diff --check 通过。日志：`.codex/remove-battle-intro-build.log`、`.codex/remove-battle-intro-tests.log`。保留既有链接环境警告；未进行实际听音验证。
+
+## 2026-11-02 · Codex：战斗 UI SVG 拆解与状态素材
+
+交付目录：`art_assets/battle-ui-v1/`。包含总图、透明 HUD、40 个布局元素、37 项基础/状态素材、70 张 1×/2× 透明 PNG、3 份待安装的四帧资源描述，以及可交互拆解页。
+
+本地验证：`build.py` 完成 SVG XML 与布局边界检查；`render.cjs` 验证全部 70 张 PNG 尺寸和透明通道；`verify.cjs` 使用本机 Chrome 检查素材链接、四态帧区别和透明切角、鼠标按下/悬停/选中、键盘取消、灵力不足/冷却禁用及恢复、HUD 切换，全部通过。截图见目录内 `preview.png`、`states-preview.png`、`interaction-preview.png`。
+
+未修改引擎、Mod 或战斗规则，因此未执行与本次设计资产无关的 C++ 构建与模拟战斗测试。当前为可编辑设计素材，不是已安装的游戏 UI。接口依据和接入限制已放入拆解页：基础窗口比例、12 槽保留、肉身生命绑定、动态文案和重复防御入口等仍需实机实现。
+
+## 2026-11-02 · Codex：战斗 UI 已接入客户端
+
+- `cmake --build build --target vcmiclient -j 6` 通过，日志 `.codex/battle-ui-build.log`。链接器继续报告本机依赖搜索路径和 macOS 版本警告，未出现编译错误。
+- `python3 -m unittest discover -s tests`：43 项通过，日志 `.codex/battle-ui-tests.log`。新增 5 项检查覆盖双倍分辨率资源、四态帧、实际底部点击区域互不重叠、六角格尺寸和中英文字键。最后文案调整后的专项测试见 `.codex/battle-ui-assets-final.log`。
+- `git diff --check` 和 `git -C engine diff --check` 通过。
+- 启动 `wuxia-art-preview.json` 与 `sword-storm.json`，通过原生窗口截图确认皮肤加载、12 槽横排、真实灵力、中文“结束行动”、队列阵营色及青玉格子。首轮发现底栏遮挡，改以 `fieldController->pos` 为锚点，第二轮截图确认两排分离。小箭头素材与跨回合重复高亮也已修正。
+- 新主题资源与文字没有缺失加载日志；运行日志仍含 commander 资源与 fighting hero access 诊断，未在本次更改其机制。
+
+限制：自动操作工具持续返回“客户端文件已变化，请重新获取状态”，重新绑定、刷新截图与重置会话后仍拒绝点击和按键，故不能声称实机按钮点击、快捷键施法已通过自动验证。服务端既有战斗回归测试通过，但不替代 GUI 点击测试。未对每一种窗口尺寸和弹窗作实机覆盖；布局按原生几何适配，弹窗没有重新换肤。
+
+主题入口为 Mod 覆盖 `config/widgets/battleWindow2.json` 的 `jadeTheme`，原版未启用时保持原资源路径。安装脚本：`art_assets/battle-ui-v1/install.cjs`；资源清单：`engine/Mods/cultivation/battle-ui-art.json`。
+
+## 2026-11-02 · Codex：修复新 UI 无法点击移动
+
+根因：`BattleFieldController::isPixelInHex` 原先用 `CCELLSHD` 阴影图片做拾取；`SDLImageShared::isTransparent` 将 alpha < 128 视为透明。新半透明阴影的最大 alpha 实测为 82，可点击像素数为 0，因此鼠标无法命中普通六角格。这是换肤回归，先前仅验证尺寸的资源测试没有覆盖透明度契约。
+
+修复：新增独立实心 `cultivation/ui/jade/hex-hit.png` 及 2× 版本，`cellHitMask` 专供点击判定；半透明 `cellShade` 仅供渲染。未启用主题时仍使用原生遮罩。新遮罩最大 alpha 255、可点击像素 1702，尺寸保持 44×56。素材导出器已同步，重新导出不会丢失修复。
+
+本地验证：6 项 UI 资源测试通过，包括新增内部采样点可点击、外角不可点击、1×/2× 尺寸一致、显示层保留半透明的回归测试。客户端 CMake 编译通过；完整测试日志 `.codex/battle-ui-picking-tests.log`，构建日志 `.codex/battle-ui-picking-build.log`。当前运行的旧客户端仍持有旧图片与代码，必须退出并重开；未声称在旧进程完成实际移动验证。
+
+## 2026-11-02 · Codex：提高行动网格对比度
+
+行动范围使用深青色填充、深色外边和明亮青玉细边；鼠标所在格使用独立金色高亮图片与中心十字。同步调整移动范围预览颜色，保持六角格尺寸和独立实心拾取遮罩。导出器已生成 69 项原生素材及 2× 版本。
+
+6 项资源测试通过（`.codex/battle-grid-contrast-tests.log`），客户端编译通过（`.codex/battle-grid-contrast-build.log`），两级仓库 diff 空白检查通过。沙地合成预览为 `art_assets/battle-ui-v1/grid-contrast-preview.png`，用于评估配色对比度，并非实机截图；未执行重启后的实机交互验证。完全退出并重开客户端生效。
+
+## 2026-11-02 · Codex：水墨 HTML＋SVG 页面与组件
+
+入口 `art_assets/battle-ui-v2/index.html`，组件画廊 `components.html`，完整矢量画面 `battle-ui.svg`。66 个组合元素、42 个基础组件状态、84 张 1×/2× 透明 PNG。独立场景底图无 UI，角色复用透明原素材。
+
+本地浏览器验证通过移动、施法/取消、空槽、等待防御、弹层、对照与重置、1920/1280/768 宽度和下载路径。资源验证通过实际尺寸、透明外角、非空、五态差异；契约校验 0 warning；两份 ZIP CRC 通过。日志 `.codex/battle-ui-v2-tests.log`。修复透明头像嵌套 SVG 触发的超大 getBBox 响应区域，使用固定组件宽高并加回归断言。
+
+这是 UI 原型与组件交付，尚未连接游戏引擎；没有运行或宣称完成游戏实机战斗验证。详细用法与复现见该目录 README.md。
+
+2026-11-02 · Codex：用户确认 HTML 设计并要求正式拆组件。复核实际页面尺寸，修正有/空功法槽、双方英雄/当前单位状态条和反馈条的尺寸，增加独立实心六角拾取遮罩。交付 29 类、51 SVG 状态、102 PNG、66 组合映射；package.py 自动验证无烘焙文字、透明外角/非空、1×2×尺寸、五态差异、组合底板尺寸、遮罩中心 alpha255、ZIP CRC，通过。技能契约校验 0 warning。未重复运行浏览器 file:// 验证（此前工具协议策略拒绝），未改交互逻辑或游戏引擎。
+
+2026-11-02 · Codex：古卷兵阵水墨 UI 原生接入完成。install.cjs 从批准 SVG 组件导出 91 项 1×/2×资源与四态按钮，12 个自定义法术图标；沙地换水墨背景。客户端调整纸面文字、队列、名牌与快捷槽颜色，保留原生布局、动作与独立拾取遮罩。撤退奔走人形、投降白旗独立绑定。右侧行动栏改为主题专属资源路径，避免旧核心资源覆盖。
+验证：cmake --build build --target vcmiclient -j6 成功；python3 -m unittest discover -s tests -v 共 46 项通过（16.311s）；根目录与 engine 的 git diff --check 通过。原生窗口截图确认水墨背景、纸色面板、朱砂/青玉名牌与独立底栏图标。桌面输入工具持续拒绝按键（user changed app），未完成手动移动/等待自动输入验证；截图中战斗可正常推进，但不将观察到的推进归为工具输入成功。运行日志有既有 zvs 指挥官图片/翻译缺失；未发现新水墨路径加载失败。
+工具记录：functions.exec/exec_command 读取源码、导出、编译、测试、启动专用场景；apply_patch 修改适配器、显示代码及文档；cua_repl 获取原生窗口截图，按键和 Raise 被状态校验拒绝。一次导出未带 NODE_PATH 导致 Sharp 模块未找到，使用既有 /tmp/battle-ui-authoring/node_modules 后成功；启动检查期间多实例日志交错，已终止重复实例并使用独立最终日志。
+
+2026-11-02 · Codex：用户反馈按钮缺底纹。读取 install.cjs、组件技能与四项契约；使用既有 SVG 导出器增加暖纸底、干笔墨边、角纹、纸纹、叠层阴影以及四态配色。普通/圆形按钮、功法槽、行动栏、翻页控件同步导出 1×/2×；防御印保持不变。Sharp 渲染原生四态预览并通过 view_image 检查。8 项已有资源测试全部通过；未改 C++ 或点击几何，不需要重新编译。未中断用户运行中的战斗，重启加载新纹理。sequential-thinking、shrimp、code-index 工具未提供，使用直接分析、rg 和既有本地测试。
+
+2026-11-02 · Codex：按用户四份提示词重新生成四张地面细节丰富的背景，替换过度空白版。原图与提示词位于 art_assets/battlefields，运行素材导出 800×556 / 1600×1112，哈希和源尺寸更新 battlefield-art.json；水墨 UI 导出器的沙地来源改读新版 golden-desert，避免下次导出回退旧城墙构图。BattleHero 仅在修仙英雄有 commander 时不提交场边英雄/旗帜渲染，保持 tick 和施法时序。wuxia-art-preview 原双方 spells=[]、mana=0，因此空槽不是层级问题；补充剑修三功法、体修震地和150灵力，不修改通用无功法英雄规则。
+验证：C++ 编译通过（首次私有 commander 访问编译失败，改用现有 getCommander 接口后通过）；46 项本地测试通过；根目录和 engine diff --check 通过。仅使用 python3 simulate.py --play --scenario scenarios/wuxia-art-preview.json 启动战斗模拟器，未启动主游戏入口。CUA 读取实际画面确认新沙地、场边无重复英雄/旗帜、体修震地图标出现；未发送按键，未宣称功法释放经过实机操作验证。生成图直接可见，其他三种背景做生成图视觉检查及双分辨率导出，未分别启动三场战斗。
+
+2026-11-02 · Codex：按实机反馈加粗古刻象形图标，SVG 主线由2.25增至3.6，剑/盾/卷轴/奔走/设置改连续曲线，原生常规图标27→29px。按钮改温润青玉哑光色差、连续圆角及浅浮雕边，去除锯齿纸边、角花、横纹；防御保留朱砂。同步 build.py、组件SVG、HTML、106 PNG、ZIP与原生91项资源；原生四态预览 native-mineral-buttons-preview.png 经视觉检查，8项已有资源测试通过（0.022s）。只更新素材，无C++改动，不需重新编译，未启动主游戏或中断正在进行的战斗。
+
+2026-11-03 · Codex：从 assets_browser/roots.json 定位用户购买Y700和U0088，审阅成品HUD/组件及75张技能图标联系表。应用page-generator，继承已批准战斗策划，image_gen使用Y700两参考图、U0088联系表与当前游戏截图生成新探索稿，保存提示词/PNG/来源清单。未替换游戏。图为参考重绘，不是原始素材拼装；撤退仍是旗帜，雷电/御剑图需在制作时区分；示意人物数字不可作为引擎数据。无代码变更，无需编译测试。一次apply_patch未逐行加+导致失败，已修正后写入。
+
+2026-11-03 · Codex：按用户拒绝生成式概念图的反馈，创建 art_assets/battle-ui-v3/index.html + battle-demo.svg，直接组装29份原始资源（Y700/U0088/已有背景角色），附独立来源素材库和离线交互。SHA256来源一致、XML及JS语法检查通过；CUA经localhost验证功法选择、弹层、素材页切换；页面状态曾变化导致关闭弹层定位超时，重新观察后继续；最后标签已关闭，未强行重开。无游戏改动。
+
+2026-11-03 · Codex：demo字体改为用户提供的苍穹/古宋；构建器添加显式文字语义类，HTML菜单标题同步。临时venv安装fonttools/brotli/Pillow，WOFF2子集约672K/87K，内嵌HTML与SVG。重建成功，JS语法通过；CUA实际截图与computedStyle确认标题/菜单Cangqiong、反馈/说明Gusong。document.fonts在只读浏览器接口不可遍历，改用可见DOM样式与截图验证。未安装系统字体、未修改游戏。
+
+2026-11-03 · Codex：按用户要求将苍穹标题/菜单字体替换为 No.39 上首至尊书法体，保留古宋正文；重建内嵌WOFF2的HTML/SVG与字体清单，验证旧字体引用已移除、两字体映射与SVG解析通过。
+
+## 2026-11-03 · Codex：Y700 原生战斗界面接入
+将已批准 HTML/SVG 的购买素材接入原生 UI：91 项双分辨率素材、12 个 U0088 技能图、至尊/古宋完整字体。复用原有按钮事件、动画资源入口和六边格点击蒙版；横排功法栏调整为60像素，增加功法名称。原生固定战场布局仍采用两侧信息栏，并非网页布局逐像素复刻。
+工具：exec_command/rg 检索客户端与配置，读取 engine/AGENTS.md；apply_patch 创建 install.cjs，Python定点修改客户端显示代码；NODE_PATH=/tmp/battle-ui-authoring/node_modules node art_assets/battle-ui-v3/install.cjs 导出；CMake本地编译；unittest本地回归；CUA读取实机截图。sequential-thinking、shrimp-task-manager、code-index 本会话未提供，采用内置分析与rg。
+验收：CMake vcmiclient编译成功；46项测试通过，最终尺寸调整后8项皮肤测试重跑通过；根仓库与engine的diff --check通过；字体SHA256与源文件一致。仅以 simulate.py --play --scenario scenarios/wuxia-art-preview.json 启动战斗模拟器，CUA确认笔刷按钮、彩绘图标、字体及完整功法名称。未执行手动施法/移动操作验证。既有SDK链接警告仍存在。
+
+
+2026-11-03 · Codex：修复底栏按钮透明状态叠绘。EventDispatcher/CButton 的外部松开取消正常；ButtonBase 将文字偏移1px后仅重绘自身，半透明笔刷无法覆盖上一帧。BattleWindow 在 jadeTheme 下对直接子 CButton 启用既有 setRedrawParent(true)，恢复背景后重画状态。保留两种字体、18号字号、y=-4标签偏移及所有点击回调。
+验证：cmake --build build --target vcmiclient -j 6 成功；现有 test_battle_ui_assets.py 11项通过（1.909s）；根目录/engine git diff --check通过。日志 .codex/button-redraw-build.log、button-redraw-tests.log。CUA读取当前旧版原生窗口确认叠字，未中断当前战斗；新代码需重启模拟器生效，尚未完成新版鼠标交互验收。
+工具留痕：functions.exec/exec_command 使用rg/sed读取按钮、输入派发、父级重绘、配置及现有测试；apply_patch修改BattleWindow与上下文/审查记录；write_stdin确认构建/测试退出0；cua_repl rewriteDocumentation/getApp/getScreenshot只读检查现有窗口；Python/Pillow核对按钮半透明像素和app可执行路径。sequential-thinking/shrimp/code-index不可用，采用内置分析与rg；无网络搜索，无CI，无远程写入。
+
+
+2026-11-03 · Codex：行动六边格接缝修复。rg/sed核对 BattleFieldController 的44列距/42行距/22错位以及 BattleStacksController 站位；旧贴图内缩1px且V41导致顶点不共边。apply_patch在现有v3安装器加入六种资源统一顶点，Sharp直接生成1×/2×/3×，保留原生略拉长的网格，不改变角色站位。新增现有unittest用例验证实际PNG平铺共边与三格交点，无透明裂缝/点击盲区；12项通过（1.853s）。exec_command运行安装器、测试，write_stdin确认退出0；Sharp合成对照并由view_image检查右侧接缝消失。更新README、上下文和审查报告。sequential-thinking/shrimp/code-index不可用，采用内置分析/rg。无C++变更、无CI、无远程写入。未重启当前战斗，贴图缓存需重启模拟器刷新，未将合成图称为实机验证。
+
+
+# Y700 其余战斗窗口审查
+2026-11-03 · Codex
+
+任务：本地 GinChow/battle_hero3 战斗模拟器其余 UI 使用 Y700。保留任务开始前已有的未提交修改，不推送远程。
+
+实现：扩展现有 Sharp 安装器，沿用 VCMI 原生 PNG/动画JSON/控件JSON；新增设置全页签、大小功法簿、单位详情、通用弹窗、结算资源。字体与战斗行为保留。额外 C++ 修改仅为水墨功法簿颜色/旧影片控制、结算图案和通用边框末段裁切。
+
+证据：
+- `.codex/context-scan-y700-windows.json`：调用入口、尺寸、优先级和风险。
+- `specs/cultivation-battle-ui-v3/window-extension.md`：范围与验收契约。
+- `.codex/y700-windows-export.log`：安装器成功导出，清单共264项，原始来源写入sourceFiles。
+- `.codex/y700-windows-build.log`：vcmiclient构建成功；仅已有依赖搜索路径、重复链接与macOS部署版本警告。
+- `.codex/y700-windows-python-tests.log`：55项通过，20.221秒，含真实本地原生战斗烟测与统计/预算功能测试。
+- `.codex/y700-windows-resource-tests.log`：最终按钮尺寸修订后16项通过，2.133秒；新增页签选中区域检查后，最终完整套件包含17项UI测试且全部通过，检查1×/2×/3×、四态差异、勾选状态、按钮文案与回调、书内图标、原生尺寸。
+- `node --check art_assets/battle-ui-v3/install.cjs` 与根目录/engine `git diff --check` 通过。
+- `window-assets-preview.png`：直接从导出文件合成的底板/控件检查图；已检查图片内容，无生成式重绘。
+
+实机：通过CUA在新客户端战场打开设置战斗页，确认旧棕色设置板、金色菜单按钮已替换；发现窄角片导致末段拼接越界后修复CMessage裁切并重编译。此后CUA报告界面变化并连续超时，重连/重启本次验证进程后仍无法恢复可靠输入；未把尝试写成验收通过。最终客户端已在全部资源修订后重新启动。
+
+限制：常规/冒险设置、子窗口、大小功法簿、单位详情和结算已接入且资源/构建检查通过，但未完成各自的实际点击验收；边框修复后的截图复核也待完成。原有运行日志另有Dungeon音乐缺失；此前打开单位相关界面还记录了原有 commander 的zvs资源/本地化缺失，与本次Y700文件无关。
+
+结论：代码与资源检查通过，实机验收部分完成。技术评分92，范围匹配90，综合88；保留明确验证限制，不宣称全页面实机通过。未接入CI，未生成PR或推送。
+
+
+## 2026-11-03 · Codex：区分当前与悬停行动范围
+当前范围保留青绿色实线，悬停范围改紫色填充/浅紫内侧虚线，复用 install.cjs 导出1×/2×/3×。不修改移动规则及点击遮罩。四种战场背景按引擎顺序合成并经 view_image 检查，重叠区域虚线仍清晰。
+本地验证：55项既有测试通过（19.793s，含17项UI资源测试、原生烟测、功能测试）；node --check、根目录和engine diff --check通过。完整输出：.codex/movement-range-tests.log，导出：.codex/movement-range-export.log；审查：.codex/review-movement-range-colors.md。无需C++编译。未重启当前战斗，实机悬停效果待重启后加载，不将合成预览称为实机截图。
+工具与阶段：functions.exec发现sequential-thinking/shrimp/code-index不可用，改用内置分析与rg；exec_command读取引擎绘制、安装器及测试，apply_patch更新安装器/上下文/README/审查；exec_command运行既有Sharp导出器、Pillow合成检查图及unittest；write_stdin确认进程，view_image检查合成图。一次读取不存在的tests/test_simulate.py返回错误，随后列出tests使用真实测试入口。上下文与规划记录于context-scan-movement-range-colors.json。全部验证在本地，无CI或远程写入。
+
+
+## 2026-11-03 · Codex：行动范围从叠色改为区域轮廓
+用户截图证明上一版紫色填充/逐格虚线在大范围重叠时仍不清晰。BattleFieldController现只在主题下为悬停角色绘制整片范围的外露边（含战场边缘、障碍空洞），内部透明，保留当前角色青绿色填充；悬停自己不重复描边。安装器生成六种边线的三种密度素材，并撤回上一版紫色逐格填充定义。
+验证：CMake vcmiclient构建通过；55项既有测试通过（19.444秒）；18张PNG检查及165个格子内部像素不变检查通过；node --check与根目录/engine diff --check通过。构建仍有既有依赖路径和SDK版本警告。日志为movement-outline-{export,build,tests,visual-check}.log；合成图movement-outline-preview.jpg；审查review-movement-outline.md。未重启用户当前战斗，未将合成图称为新版实机验收。
+工具留痕：functions.exec/exec_command通过rg/sed读取引擎、Canvas、邻接函数及安装器；一次读取engine/client/render/Canvas.h不存在，使用rg定位SDL后端头文件；apply_patch更新控制器、安装器、README、上下文和审查；exec_command运行既有Sharp安装器、CMake、unittest、临时Pillow像素验证；write_stdin收集退出0；view_image检查合成预览；cua_repl.getState只读获取应用清单确认模拟器仍运行。sequential-thinking、shrimp-task-manager、code-index仍未提供，使用内置分析/rg和本地计划。无CI，无远程写入。
+
+
+## 2026-11-03 · Codex：按用户要求回退轮廓并改红色
+精确撤回上一轮整片外轮廓和悬停自身例外，恢复逐格填充/内侧虚线，悬停改朱红#cc4b43（.38）、深红边框#923d36、浅红虚线#ffb5a7，当前青绿色不变。移除六种边线的18张PNG及清单条目；安装器重新导出264项，其他已有改动保留。
+验证：CMake vcmiclient成功；55项既有本地测试通过（18.962秒，含资源/原生烟测/功能）；三种密度颜色、透明度、尺寸及旧轮廓清理检查通过；node --check和两个仓库diff --check通过。保留既有链接警告。view_image已检查三栏合成预览，未重启用户当前战斗，未宣称新版实机验证通过。详见review-movement-red.md及movement-red-{export,build,tests}.log。
+工具留痕：exec_command用rg/sed复核待回退位置；apply_patch精确回退控制器、修改生成源和README/上下文/审查；Python仅清理上一轮生成的指定PNG和清单项；exec_command运行既有安装器、CMake、unittest及临时像素检查/合成；write_stdin收集退出0；view_image检查预览。sequential-thinking/shrimp-task-manager/code-index未提供，沿用内置分析、rg和本地计划。无网络、无CI、无远程写入。
+
+
+## 2026-11-03 · Codex：当前范围加深并偏蓝
+用户要求青绿色往蓝色调深；install.cjs的CCELLSHD从#648477/.34改为#286a9b/.46，边框改#23577d。朱红悬停范围保持不变，三种密度SHA256校验一致。复用既有安装器导出1×/2×/3×，更新README。
+验证：17项既有资源测试通过（1.743秒），node --check与根目录/engine diff --check通过；view_image检查蓝/红/重叠合成预览movement-blue-preview.png。仅资源调色，无C++变更，无需编译或重复完整战斗逻辑测试。未重启当前战斗，重启后加载新贴图；合成预览不是实机截图。
+留痕：exec_command读取安装器/README/测试、记录悬停哈希、导出、执行测试及哈希检查；apply_patch修改颜色与上下文；Pillow合成预览，view_image目视检查；write_stdin确认退出0。sequential-thinking/shrimp/code-index未提供，采用内置分析与本地工具。日志movement-blue-{export,tests}.log；上下文context-scan-movement-blue.json。无CI，无远程写入。
+
+
+## 2026-11-03 · Codex：当前范围网格加粗并修复外围裁边
+旧描边位于贴图边界，外围被裁去半边；新增48×60透明留边的逐格蓝色描边，线宽2.2逻辑像素。BattleFieldController在既有范围判断中收集格子，全部填色/基础网格完成后叠绘描边，保持44×56点击几何。蓝色填充及红色悬停六份PNG SHA256保持不变；stackRange关闭时不描边。
+验证：CMake vcmiclient成功；55项既有本地测试通过（20.032秒）；node --check和两个仓库diff --check通过。三个密度外围有效线宽约2.2px，共边约2.34–2.38px，差异小于0.2逻辑像素。合成前后对比active-border-preview.png经view_image检查；未重启用户战斗，不宣称实机验证完成。日志active-border-{build,export,tests,pixels}.log，审查review-active-border.md。
+工具：exec_command以rg/sed读取安装器、控制器、README及测试；apply_patch更新描边资源定义、C++加载/绘制、README和上下文/审查；exec_command运行既有Sharp导出、CMake、unittest、哈希校验及临时Pillow测量/合成；write_stdin确认退出0；view_image查看对比。sequential-thinking/shrimp/code-index未提供，采用内置分析、rg和本地计划。仅保留既有链接警告，无CI，无远程写入。
+
+
+## 2026-11-03 · Codex：蓝色描边减细至1.5px
+按用户反馈将hex-active-border从2.2改为1.5逻辑像素，保留2px透明留边及填充后叠绘，避免回到外围裁细问题。蓝色填充、朱红悬停及引擎逻辑不变，既有安装器同步三种密度。
+验证：17项既有资源测试通过（2.012秒）；三种密度实际外围有效宽度1.498/1.502/1.501逻辑像素；尺寸与透明中心通过；node --check、两个仓库diff --check通过。资源变更无需重编译，重启模拟器加载；未执行新版实机验收。
+工具留痕：exec_command以rg读取定义、执行既有Sharp导出器/资源测试/像素检查；apply_patch调整线宽、README及上下文；write_stdin确认退出0。sequential-thinking/shrimp/code-index未提供，使用内置分析和本地工具。日志active-border-light-{export,tests,pixels}.log。无CI，无远程写入。

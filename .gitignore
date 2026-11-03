@@ -5,3 +5,4 @@ __pycache__/
 .codex/
 results/
 .DS_Store
+art_assets/
